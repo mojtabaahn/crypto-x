@@ -66,18 +66,18 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="px-6 py-4">
+    <div class="">
       <div v-if="ordersLoading && !orders.length" class="flex items-center justify-center py-8">
         <Spinner class="h-6 w-6" />
       </div>
-      <div v-else class="space-y-4">
+      <div v-else class="">
         <div>
-          <h3 class="text-sm font-medium text-red-600 dark:text-red-400 mb-2">Sell Orders</h3>
+          <h3 class="text-sm font-medium text-red-600 dark:text-red-400 px-4 py-2">Sell Orders</h3>
           <div v-if="sellOrders.length > 0" class="space-y-1">
             <div
               v-for="order in sellOrders"
               :key="order.id"
-              class="flex justify-between items-center text-sm py-1 px-2 hover:bg-muted rounded"
+              class="flex justify-between items-center text-sm py-2 px-4 hover:bg-muted"
             >
               <span class="font-medium">${{ order.price?.toFixed(2) || '0.00' }}</span>
               <span>{{ order.amount?.toFixed(4) || '0.0000' }}</span>
@@ -88,15 +88,15 @@ onMounted(() => {
           </div>
         </div>
 
-        <Separator class="-mx-6" />
+        <Separator />
 
         <div>
-          <h3 class="text-sm font-medium text-green-600 dark:text-green-400 mb-2">Buy Orders</h3>
+          <h3 class="text-sm font-medium text-green-600 dark:text-green-400 px-4 py-2">Buy Orders</h3>
           <div v-if="buyOrders.length > 0" class="space-y-1">
             <div
               v-for="order in buyOrders"
               :key="order.id"
-              class="flex justify-between items-center text-sm py-1 px-2 hover:bg-muted rounded"
+              class="flex justify-between items-center text-sm py-2 px-4 hover:bg-muted"
             >
               <span class="font-medium">${{ order.price?.toFixed(2) || '0.00' }}</span>
               <span>{{ order.amount?.toFixed(4) || '0.0000' }}</span>
