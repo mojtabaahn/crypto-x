@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\OrderMatched;
 use App\Models\Asset;
 use App\Models\Order;
 use App\Models\Trade;
@@ -65,7 +66,7 @@ class MatchOrder implements ShouldQueue
         $buyOrder->update(['status' => OrderStatus::Filled]);
         $sellOrder->update(['status' => OrderStatus::Filled]);
 
-        Trade::create([
+        $trade = Trade::create([
             'buying_order_id' => $buyOrder->id,
             'selling_order_id' => $sellOrder->id,
         ]);
@@ -91,5 +92,7 @@ class MatchOrder implements ShouldQueue
             ->first();
 
         $sellerAsset->decrement('locked_amount', $sellOrder->amount);
+
+        OrderMatched::dispatch($trade);
     }
 }
