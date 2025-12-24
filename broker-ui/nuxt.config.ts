@@ -6,6 +6,17 @@ export default defineNuxtConfig({
   devtools: {enabled: true},
   css: ['~/assets/css/tailwind.css'],
 
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap'
+        }
+      ]
+    }
+  },
+
   vite: {
       plugins: [
           tailwindcss(),
@@ -13,4 +24,22 @@ export default defineNuxtConfig({
   },
 
   modules: ['shadcn-nuxt'],
+
+  shadcn: {
+    /**
+     * Prefix for all the imported component.
+     * @default "Ui"
+     */
+    prefix: '',
+    /**
+     * Directory that the component lives in.
+     * Will respect the Nuxt aliases.
+     * @link https://nuxt.com/docs/api/nuxt-config#alias
+     * @default "@/components/ui"
+     */
+    componentDir: '@/components/ui'
+  },
+
+    pages: true,
+
 })
