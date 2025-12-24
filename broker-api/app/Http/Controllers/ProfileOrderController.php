@@ -7,7 +7,7 @@ use App\Models\Order;
 use App\OrderStatus;
 use Illuminate\Http\Request;
 
-class ListOrderController extends Controller
+class ProfileOrderController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -16,9 +16,17 @@ class ListOrderController extends Controller
     {
         return OrderResource::collection(
             Order::query()
-                ->where('status', OrderStatus::Open)
+                ->where('user_id', $request->user()->id)
                 ->when($request->input('symbol'), fn($query, $symbol) => $query->where('symbol', $symbol))
                 ->when($request->input('side'), fn($query, $side) => $query->where('side', $side))
+                ->when(
+                    $request->input('status') && in_array(ucfirst($request->input('status')), [
+                        OrderStatus::Open->name,
+                        OrderStatus::Filled->name,
+                        OrderStatus::Cancelled->name,
+                    ]),
+                    fn($query, $status) => $query->where('status', OrderStatus::{ucfirst($status)}->value)
+                )
                 ->get()
         );
     }
